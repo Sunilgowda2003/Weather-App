@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4f7fc">
+  <meta name="description" content="A modern weather dashboard with current conditions and forecasts.">
+  <title>WeatherApp | Weather Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <a href="#" class="brand">
+        <span class="brand-icon">☁</span>
+        <span>WeatherApp</span>
+      </a>
+
+      <nav class="navigation">
+        <a class="nav-link active" href="#dashboard">⌂ <span>Dashboard</span></a>
+        <a class="nav-link" href="#search">⌕ <span>Search</span></a>
+        <a class="nav-link" href="#hourly">☁ <span>Forecast</span></a>
+        <a class="nav-link" href="#details">◈ <span>Weather Details</span></a>
+        <a class="nav-link" href="#air-quality">◉ <span>Air Quality</span></a>
+        <a class="nav-link" href="#settings">⚙ <span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="note-icon">🌤️</span>
+        <h3>Stay weather-ready</h3>
+        <p>Explore current conditions and forecasts for cities around the world.</p>
+      </div>
+
+      <div class="sidebar-footer">WeatherApp · 2026</div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+
+      <header class="topbar" id="search">
+        <form class="search-form" id="search-form">
+          <span class="search-icon">⌕</span>
+          <input
+            id="city-input"
+            type="search"
+            placeholder="Search city (e.g. Bengaluru, London)"
+            aria-label="Search city"
+            autocomplete="off"
+          >
+          <button type="submit" class="search-button">Search</button>
+        </form>
+
+        <div class="topbar-actions">
+          <button class="icon-button" id="location-button"
+            aria-label="Use current location" title="Use my location">⌖</button>
+
+          <div class="unit-toggle" aria-label="Temperature units">
+            <button class="unit-button active" data-unit="celsius">°C</button>
+            <button class="unit-button" data-unit="fahrenheit">°F</button>
+          </div>
+
+          <button class="icon-button" id="theme-button"
+            aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
+        </div>
+      </header>
+
+      <p class="status-message" id="status-message" role="status">
+        Showing demonstration weather data. Connect the weather API in the next step.
+      </p>
+
+      <section class="hero weather-hero" aria-label="Current weather">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+          <div class="hero-location">
+            <span>📍</span>
+            <div>
+              <h1 id="city-name">Bengaluru, India</h1>
+              <p id="current-date">Loading date...</p>
+            </div>
+          </div>
+
+          <div class="hero-weather">
+            <div class="hero-weather-icon" id="current-icon">🌤️</div>
+            <div>
+              <div class="current-temperature">
+                <span id="current-temp">28</span><span class="degree">°</span>
+                <span class="unit-symbol">C</span>
+              </div>
+              <h2 id="current-condition">Partly Cloudy</h2>
+              <p class="feels-like">Feels like <span id="feels-like">30</span>°</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <span class="metric-icon">💧</span>
+            <div><span>Humidity</span><strong id="humidity">62%</strong></div>
+          </div>
+          <div class="hero-metric">
+            <span class="metric-icon">≋</span>
+            <div><span>Wind Speed</span><strong id="wind-speed">14 km/h</strong></div>
+          </div>
+          <div class="hero-metric">
+            <span class="metric-icon">◉</span>
+            <div><span>Pressure</span><strong id="pressure">1012 hPa</strong></div>
+          </div>
+          <div class="hero-metric">
+            <span class="metric-icon">◎</span>
+            <div><span>Visibility</span><strong id="visibility">10 km</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary-grid" id="details" aria-label="Daily weather summary">
+        <article class="summary-card max-card">
+          <span class="summary-icon">🌡️</span>
+          <div><p>Max Temperature</p><strong id="max-temp">30°</strong></div>
+        </article>
+        <article class="summary-card min-card">
+          <span class="summary-icon">🌡️</span>
+          <div><p>Min Temperature</p><strong id="min-temp">22°</strong></div>
+        </article>
+        <article class="summary-card sunrise-card">
+          <span class="summary-icon">🌅</span>
+          <div><p>Sunrise</p><strong id="sunrise">6:18 AM</strong></div>
+        </article>
+        <article class="summary-card sunset-card">
+          <span class="summary-icon">🌇</span>
+          <div><p>Sunset</p><strong id="sunset">6:02 PM</strong></div>
+        </article>
+      </section>
+
+      <section class="analytics-grid">
+
+        <article class="panel hourly-panel" id="hourly">
+          <div class="panel-heading">
+            <h2>Hourly Forecast</h2>
+            <span>Next 24 hours</span>
+          </div>
+          <div class="hourly-list" id="hourly-list"></div>
+        </article>
+
+        <article class="panel chart-panel">
+          <div class="panel-heading">
+            <h2>Temperature Trend</h2>
+            <span>Next 7 days</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="temperature-chart"
+              role="img" aria-label="Seven-day maximum and minimum temperature chart"></canvas>
+          </div>
+          <div class="chart-legend">
+            <span><i class="legend-dot max-dot"></i> Max Temp</span>
+            <span><i class="legend-dot min-dot"></i> Min Temp</span>
+          </div>
+        </article>
+
+        <article class="panel air-panel" id="air-quality">
+          <div class="panel-heading">
+            <h2>Air Quality Index</h2>
+          </div>
+          <div class="air-content">
+            <div class="aqi-ring" id="aqi-ring">
+              <div class="aqi-center">
+                <strong id="aqi-value">78</strong>
+                <span id="aqi-label">Moderate</span>
+              </div>
+            </div>
+            <div class="pollutants">
+             <div><span>PM2.5</span><strong id="pm25">--</strong></div>
+             <div><span>PM10</span><strong id="pm10">--</strong></div>
+             <div><span>NO₂</span><strong id="no2">--</strong></div>
+             <div><span>SO₂</span><strong id="so2">--</strong></div>
+            </div>
+          </div>
+          <p class="demo-note">Illustrative values — not live air-quality data.</p>
+        </article>
+      </section>
+
+      <section class="panel forecast-panel" id="forecast">
+        <div class="panel-heading">
+          <h2>7-Day Forecast</h2>
+          <span>Daily outlook</span>
+        </div>
+        <div class="forecast-grid" id="forecast-grid"></div>
+      </section>
+
+      
+<!-- Settings Panel -->
+<section class="panel settings-panel" id="settings">
+  <div class="panel-heading">
+    <h2>⚙️ Dashboard Settings</h2>
+    <span>Customize your experience</span>
+  </div>
+
+  <div class="settings-list">
+    <div class="setting-item">
+      <div>
+        <h3>Temperature Unit</h3>
+        <p>Choose your preferred temperature unit.</p>
+      </div>
+
+      <select id="settings-unit">
+        <option value="celsius">Celsius (°C)</option>
+        <option value="fahrenheit">Fahrenheit (°F)</option>
+      </select>
+    </div>
+
+    <div class="setting-item">
+      <div>
+        <h3>Dark Mode</h3>
+        <p>Switch between light and dark dashboard themes.</p>
+      </div>
+
+      <label class="settings-switch">
+        <input type="checkbox" id="settings-dark-mode">
+        <span>Enable dark mode</span>
+      </label>
+    </div>
+
+    <div class="setting-item">
+      <div>
+        <h3>Refresh Weather</h3>
+        <p>Fetch the latest weather for the selected city.</p>
+      </div>
+
+      <button type="button" class="search-button settings-refresh"
+        id="settings-refresh">
+        Refresh Weather
+      </button>
+    </div>
+  </div>
+</section>
+
+      <footer class="page-footer">
+        <p>WeatherApp · Built with HTML, CSS & JavaScript</p>
+        <p>Weather data integration: Open-Meteo</p>
+      </footer>
+
+    </main>
+  </div>
+</body>
+</html>
