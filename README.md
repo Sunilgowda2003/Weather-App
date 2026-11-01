@@ -10,13 +10,13 @@ The application uses the **Open-Meteo API** to retrieve weather and air quality 
 
 | Dark Mode | Light Mode |
 |---|---|
-| ![Weather Dashboard Dark](screenshots/weather-dashboard-dark.png) | ![Weather Dashboard Light](screenshots/weather-dashboard-light.png) |
+| ![Weather Dashboard Dark](Screenshots/weather-dashboard-dark.png) | ![Weather Dashboard Light](Screenshots/weather-dashboard-light.png) |
 
 ### Forecast and Settings
 
 | Light Mode | Dark Mode |
 |---|---|
-| ![Forecast and Settings Light](screenshots/weather-forecast-settings-light.png) | ![Forecast and Settings Dark](screenshots/weather-forecast-settings-dark.png) |
+| ![Forecast and Settings Light](Screenshots/weather-forecast-settings-light.png) | ![Forecast and Settings Dark](Screenshots/weather-forecast-settings-dark.png) |
 
 ## ✨ Features
 
