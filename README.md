@@ -4,6 +4,8 @@ A modern, responsive Weather Dashboard built using **HTML5, CSS3, and JavaScript
 
 The application uses the **Open-Meteo API** to retrieve weather and air quality information without requiring an API key.
 
+Live Demo : https://sunilgowda2003.github.io/Weather-App/
+
 ## 📸 Screenshots
 
 ### Weather Dashboard
